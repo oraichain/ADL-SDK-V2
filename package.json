@@ -13,6 +13,8 @@
     "@coral-xyz/anchor": "^0.31.1",
     "@solana/spl-token": "^0.3.9",
     "@solana/web3.js": "^1.87.6",
+    "bs58": "^6.0.0",
+    "dotenv": "^17.2.1",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
