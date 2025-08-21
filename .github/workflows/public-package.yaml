@@ -47,7 +47,7 @@ jobs:
       - name: Publish ADL SDK
         id: publish
         continue-on-error: true
-        run: yarn deploy packages/adl-sdk
+        run: yarn publish --access public
         env:
           CI: false
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
