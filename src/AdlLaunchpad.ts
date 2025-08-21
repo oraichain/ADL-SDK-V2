@@ -1,4 +1,4 @@
-import { Connection, PublicKey, TransactionInstruction } from '@solana/web3.js';
+import { Connection, Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import {
   DefaiLaunchpadProgram,
   PrepareTokenAccountParams,
@@ -6,13 +6,15 @@ import {
   SwapParams,
   UnstakeParams,
   ClaimTokenParams,
+  SimulateSwapParams,
 } from './types';
 import DefaiLaunchpadIDL from './idl/defai_launchpad.json';
-import { BN, IdlAccounts, Program } from '@coral-xyz/anchor';
+import { AnchorProvider, BN, IdlAccounts, Program } from '@coral-xyz/anchor';
 import type { DefaiLaunchpad, DefaiLaunchpad as DefaiLaunchpadTypes } from './idl/defai_launchpad';
 import { getOrCreateATAInstruction } from './helper';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import invariant from 'invariant';
+import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 
 export class AdlLaunchpad {
   _program: DefaiLaunchpadProgram;
@@ -46,6 +48,8 @@ export class AdlLaunchpad {
       instructions,
     };
   }
+
+  // ----------------------------- QUERIES -----------------------------
 
   async loadConfigAccount() {
     if (!this.configAccount) {
@@ -92,6 +96,22 @@ export class AdlLaunchpad {
 
     return stakerInfoAccount;
   }
+
+  async simulateSwap(params: SimulateSwapParams) {
+    const { amountIn, direction, poolTokenMint, provider } = params;
+    const program = new Program(DefaiLaunchpadIDL as DefaiLaunchpadTypes, provider);
+
+    const result = await program.methods
+      .simulateSwap(amountIn, direction ? 1 : 0)
+      .accounts({
+        tokenMint: poolTokenMint,
+      })
+      .view();
+
+    return result;
+  }
+
+  // ----------------------------- INSTRUCTIONS -----------------------------
 
   async stakeInstruction(params: StakeParams): Promise<TransactionInstruction> {
     const { owner, poolTokenMint, amount, stakeTokenMint } = params;

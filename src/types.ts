@@ -1,4 +1,4 @@
-import { IdlAccounts, IdlTypes, Program, BN } from '@coral-xyz/anchor';
+import { IdlAccounts, IdlTypes, Program, BN, AnchorProvider } from '@coral-xyz/anchor';
 import { PublicKey, Transaction } from '@solana/web3.js';
 import type { DefaiLaunchpad as DefaiLaunchpadTypes } from './idl/defai_launchpad';
 
@@ -41,4 +41,11 @@ export type ClaimTokenParams = {
   poolTokenMint: PublicKey;
   receiver: PublicKey;
   tokenProgram: PublicKey;
+};
+
+export type SimulateSwapParams = {
+  provider: AnchorProvider;
+  poolTokenMint: PublicKey;
+  amountIn: BN;
+  direction: boolean; // true: sell, false: buy
 };

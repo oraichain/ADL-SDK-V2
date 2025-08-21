@@ -3,7 +3,6 @@ import { AdlLaunchpad } from '../src/AdlLaunchpad';
 
 async function main() {
   const connection = new Connection('https://api.devnet.solana.com');
-
   const adlLaunchpad = new AdlLaunchpad(connection);
 
   const stakerInfo = await adlLaunchpad.getUserInfoByPool(
