@@ -1,0 +1,27 @@
+name: Bump package version
+
+on:
+  workflow_dispatch:
+    inputs:
+      changes:
+        description: "Level of changes"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  bump-package-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Bump package version
+        run: |
+          npm version ${{ inputs.changes }}
+      - name: Push changes
+        run: |
+          git push origin main
