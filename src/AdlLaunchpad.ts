@@ -97,6 +97,20 @@ export class AdlLaunchpad {
     return stakerInfoAccount;
   }
 
+  async getStakingVaultInfo(
+    poolTokenMint: PublicKey
+  ): Promise<IdlAccounts<DefaiLaunchpad>['stakingVaultV2'] | null> {
+    const [stakingVaultPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from('staking_vault_v2'), poolTokenMint.toBytes()],
+      this._program.programId
+    );
+    const stakingVaultAccount = await this._program.account.stakingVaultV2.fetchNullable(
+      stakingVaultPda
+    );
+    invariant(stakingVaultAccount, 'Staking vault account not found');
+    return stakingVaultAccount;
+  }
+
   async simulateSwap(params: SimulateSwapParams) {
     const { amountIn, direction, poolTokenMint, provider } = params;
     const program = new Program(DefaiLaunchpadIDL as DefaiLaunchpadTypes, provider);
