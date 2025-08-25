@@ -1,4 +1,4 @@
-import { Connection, Keypair, PublicKey, TransactionInstruction } from '@solana/web3.js';
+import { Connection, PublicKey, TransactionInstruction } from '@solana/web3.js';
 import {
   DefaiLaunchpadProgram,
   PrepareTokenAccountParams,
@@ -9,12 +9,11 @@ import {
   SimulateSwapParams,
 } from './types';
 import DefaiLaunchpadIDL from './idl/defai_launchpad.json';
-import { AnchorProvider, BN, IdlAccounts, Program } from '@coral-xyz/anchor';
+import { BN, IdlAccounts, Program } from '@coral-xyz/anchor';
 import type { DefaiLaunchpad, DefaiLaunchpad as DefaiLaunchpadTypes } from './idl/defai_launchpad';
 import { getOrCreateATAInstruction } from './helper';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import invariant from 'invariant';
-import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
 
 export class AdlLaunchpad {
   _program: DefaiLaunchpadProgram;
