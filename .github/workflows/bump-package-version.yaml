@@ -19,9 +19,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
       - name: Bump package version
         run: |
           npm version ${{ inputs.changes }}
-      - name: Push changes
-        run: |
+
+          git push --tags
           git push origin main
