@@ -45,7 +45,9 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       - name: Copy package.json to dist
-        run: cp package.json dist/package.json
+        run: |
+          cp package.json dist/package.json
+          cp README.md dist/README.md
 
       - name: Publish ADL SDK
         id: publish
