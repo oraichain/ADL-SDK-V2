@@ -11,13 +11,27 @@ A TypeScript SDK for interacting with the ADL (Automated Dynamic Launchpad) prot
 - 🏦 **Token Claims**: Claim earned tokens from pools
 - 🔧 **TypeScript Support**: Full TypeScript support with comprehensive type definitions
 
+## Installation
+
+Install the package using npm or yarn:
+
+```bash
+npm install @oraichain/adl-sdk-v2
+```
+
+or
+
+```bash
+yarn add @oraichain/adl-sdk-v2
+```
+
 ## Quick Start
 
 ### Basic Setup
 
 ```typescript
 import { Connection } from '@solana/web3.js';
-import { AdlLaunchpad } from 'adl-sdk-v2';
+import { AdlLaunchpad } from '@oraichain/adl-sdk-v2';
 
 // Initialize connection
 const connection = new Connection('https://api.devnet.solana.com');
@@ -166,7 +180,7 @@ const claimIx = await adlLaunchpad.claimTokenInstruction({
 
 ```typescript
 import { Connection, Keypair, PublicKey } from '@solana/web3.js';
-import { AdlLaunchpad } from 'adl-sdk-v2';
+import { AdlLaunchpad } from '@oraichain/adl-sdk-v2';
 import { AnchorProvider, BN } from '@coral-xyz/anchor';
 import bs58 from 'bs58';
 import NodeWallet from '@coral-xyz/anchor/dist/cjs/nodewallet';
@@ -196,7 +210,7 @@ async function simulateSwap() {
 import { BN } from '@coral-xyz/anchor';
 import { Keypair, PublicKey, Transaction } from '@solana/web3.js';
 import { Connection } from '@solana/web3.js';
-import { AdlLaunchpad } from 'adl-sdk-v2';
+import { AdlLaunchpad } from '@oraichain/adl-sdk-v2';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import bs58 from 'bs58';
 import 'dotenv/config';
@@ -225,7 +239,7 @@ async function stakeTokens() {
 
 ```typescript
 import { Connection, PublicKey } from '@solana/web3.js';
-import { AdlLaunchpad } from 'adl-sdk-v2';
+import { AdlLaunchpad } from '@oraichain/adl-sdk-v2';
 
 async function getPoolInfo() {
   const connection = new Connection('https://api.devnet.solana.com');
@@ -243,7 +257,7 @@ async function getPoolInfo() {
 
 ```typescript
 import { Connection, PublicKey } from '@solana/web3.js';
-import { AdlLaunchpad } from 'adl-sdk-v2';
+import { AdlLaunchpad } from '@oraichain/adl-sdk-v2';
 
 async function getUserInfo() {
   const connection = new Connection('https://api.devnet.solana.com');
