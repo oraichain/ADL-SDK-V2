@@ -1,4 +1,4 @@
-name: publish_package
+name: Publish package
 
 # Controls when the action will run.
 on:
@@ -44,10 +44,13 @@ jobs:
       - name: Authenticate with private NPM package
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
+      - name: Copy package.json to dist
+        run: cp package.json dist/package.json
+
       - name: Publish ADL SDK
         id: publish
         continue-on-error: true
-        run: yarn publish --access public
+        run: yarn publish --access public dist
         env:
           CI: false
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
