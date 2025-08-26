@@ -8,7 +8,7 @@ async function main() {
   const stakersInfo = await adlLaunchpad.getUsersInfoByPool(
     [
       new PublicKey('CrEXamRqW3F4BfJZUYREr25jkDsyV2QxuVqK2BCZMrTu'),
-      new PublicKey('CrEXamRqW3F4BfJZUYREr25jkDsyV2QxuVqK2BCZMrTu')
+      new PublicKey('CrEXamRqW3F4BfJZUYREr25jkDsyV2QxuVqK2BCZMrTu'),
     ],
     new PublicKey('4JdDcbemhLhPCUKnpMJX5HT4ynUHtD8RKJtqbu29Uyag')
   );
