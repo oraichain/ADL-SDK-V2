@@ -4,18 +4,14 @@
   "description": "SDK for ADL",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc",
     "build:clean": "npm run clean && npm run build",
     "test": "jest",
     "test:watch": "jest --watch",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run build:clean",
-    "prepack": "npm run clean",
-    "postpack": "npm run build"
+    "prepack": "npm run clean"
   },
   "keywords": [
     "oraichain",
