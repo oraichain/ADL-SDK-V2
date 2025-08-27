@@ -4,10 +4,47 @@
   "description": "SDK for ADL",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsc --project tsconfig.json",
+    "build:clean": "npm run clean && npm run build",
     "test": "jest",
-    "clean": "rm -rf dist"
+    "test:watch": "jest --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build:clean",
+    "prepack": "npm run clean",
+    "postpack": "npm run build"
+  },
+  "keywords": [
+    "oraichain",
+    "adl",
+    "ai",
+    "data-layer",
+    "blockchain",
+    "sdk",
+    "typescript",
+    "solana",
+    "anchor"
+  ],
+  "author": {
+    "name": "Oraichain",
+    "url": "https://oraichain.io"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oraichain/adl-sdk-v2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oraichain/adl-sdk-v2/issues"
+  },
+  "homepage": "https://github.com/oraichain/adl-sdk-v2#readme",
+  "engines": {
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1",
@@ -24,5 +61,9 @@
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
+  },
+  "peerDependencies": {},
+  "publishConfig": {
+    "access": "public"
   }
 }
