@@ -58,10 +58,8 @@ jobs:
 
       - name: Prepare for publish
         run: |
-          mkdir build
-          mv dist build/
-          cp package.json build/
-          cp README.md build/
+          cp package.json dist/
+          cp README.md dist/
 
       - name: Authenticate with private NPM package
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
@@ -69,7 +67,7 @@ jobs:
       - name: Publish package
         id: publish
         continue-on-error: true
-        run: yarn publish --access public build
+        run: yarn publish --access public dist
         env:
           CI: false
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
