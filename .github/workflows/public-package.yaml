@@ -1,17 +1,28 @@
 name: Publish package
 
-# Controls when the action will run.
 on:
-  # Allows you to run this workflow manually from the Actions tab
   push:
     tags:
-      - "v*"
+      - "v[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to publish"
+        required: true
+        default: "v1.0.0"
+        type: string
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        description: "Tag to publish"
+        required: true
+        default: "v1.0.0"
+
 env:
   node-verison: "22"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains 1 job called "build"
   build:
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +30,11 @@ jobs:
         uses: styfle/cancel-workflow-action@0.8.0
         with:
           access_token: ${{ github.token }}
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.tag || github.ref }}
       - name: Use Node.js ${{ env.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -37,22 +52,16 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install Dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
       - name: Build
         run: yarn build
       - name: Authenticate with private NPM package
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
-      - name: Copy package.json to dist
-        run: |
-          cp package.json dist/package.json
-          cp README.md dist/README.md
-
-      - name: Publish ADL SDK
+      - name: Publish package
         id: publish
         continue-on-error: true
-        run: yarn publish --access public dist
+        run: yarn publish --access public
         env:
           CI: false
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

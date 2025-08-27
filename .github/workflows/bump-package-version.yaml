@@ -15,6 +15,8 @@ on:
 
 jobs:
   bump-package-version:
+    outputs:
+      tag: ${{ steps.bump-package-version.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -24,11 +26,20 @@ jobs:
           fetch-depth: 0
       - name: Configure Git
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
       - name: Bump package version
+        id: bump-package-version
         run: |
-          npm version ${{ inputs.changes }}
-
+          echo "tag=$(npm version ${{ inputs.changes }})" >> $GITHUB_OUTPUT
           git push --tags
           git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-package:
+    needs: bump-package-version
+    uses: ./.github/workflows/public-package.yaml
+    with:
+      tag: ${{ needs.bump-package-version.outputs.tag }}
+    secrets: inherit
