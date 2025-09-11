@@ -7,6 +7,7 @@ import {
   UnstakeParams,
   ClaimTokenParams,
   SimulateSwapParams,
+  UpdateOracleParams,
 } from './types';
 import DefaiLaunchpadIDL from './idl/defai_launchpad.json';
 import { BN, IdlAccounts, Program } from '@coral-xyz/anchor';
@@ -130,6 +131,20 @@ export class AdlLaunchpad {
     return stakingVaultAccount;
   }
 
+  async getOracleVaultInfo(
+    poolTokenMint: PublicKey
+  ): Promise<IdlAccounts<DefaiLaunchpad>['oracleVaults'] | null> {
+    const [oracleVaultPda] = PublicKey.findProgramAddressSync(
+      [Buffer.from('oracle_vault'), poolTokenMint.toBytes()],
+      this._program.programId
+    );
+    const oracleVaultAccount = await this._program.account.oracleVaults.fetchNullable(
+      oracleVaultPda
+    );
+    invariant(oracleVaultAccount, 'Oracle vault account not found');
+    return oracleVaultAccount;
+  }
+
   async simulateSwap(params: SimulateSwapParams) {
     const { amountIn, direction, poolTokenMint, provider } = params;
     const program = new Program(DefaiLaunchpadIDL as DefaiLaunchpadTypes, provider);
@@ -242,6 +257,20 @@ export class AdlLaunchpad {
         payer: owner,
         receiver: receiver,
         tokenProgram: tokenProgram,
+      })
+      .instruction();
+
+    return ix;
+  }
+
+  async updateOracleInstruction(params: UpdateOracleParams) {
+    const { poolTokenMint, updateTradingTime, oracleDetails, relayer } = params;
+
+    const ix = await this._program.methods
+      .updateOracle(updateTradingTime, oracleDetails)
+      .accounts({
+        migrator: relayer,
+        rewardCurrencyMint: poolTokenMint,
       })
       .instruction();
 

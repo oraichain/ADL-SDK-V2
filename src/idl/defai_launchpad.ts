@@ -348,6 +348,331 @@ export type DefaiLaunchpad = {
       returns: 'u64';
     },
     {
+      name: 'claim';
+      discriminator: [62, 198, 214, 193, 213, 159, 108, 210];
+      accounts: [
+        {
+          name: 'globalConfig';
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [99, 111, 110, 102, 105, 103];
+              }
+            ];
+          };
+        },
+        {
+          name: 'pause';
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [112, 97, 117, 115, 101];
+              }
+            ];
+          };
+        },
+        {
+          name: 'teamWallet';
+          writable: true;
+        },
+        {
+          name: 'creatorWallet';
+          writable: true;
+        },
+        {
+          name: 'bondingCurve';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [98, 111, 110, 100, 105, 110, 103, 95, 99, 117, 114, 118, 101];
+              },
+              {
+                kind: 'account';
+                path: 'tokenMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'stakingVault';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [115, 116, 97, 107, 105, 110, 103, 95, 118, 97, 117, 108, 116, 95, 118, 50];
+              },
+              {
+                kind: 'account';
+                path: 'tokenMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'stakerInfo';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [115, 116, 97, 107, 101, 114, 95, 105, 110, 102, 111, 95, 118, 50];
+              },
+              {
+                kind: 'account';
+                path: 'stakingVault';
+              },
+              {
+                kind: 'account';
+                path: 'user';
+              }
+            ];
+          };
+        },
+        {
+          name: 'curveVault';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [99, 117, 114, 118, 101, 95, 118, 97, 117, 108, 116];
+              },
+              {
+                kind: 'account';
+                path: 'tokenMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'curveVaultAta';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'account';
+                path: 'curveVault';
+              },
+              {
+                kind: 'account';
+                path: 'tokenProgram';
+              },
+              {
+                kind: 'account';
+                path: 'tokenMint';
+              }
+            ];
+            program: {
+              kind: 'const';
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ];
+            };
+          };
+        },
+        {
+          name: 'distributor';
+          docs: ['The [MerkleDistributor].'];
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [
+                  109,
+                  101,
+                  114,
+                  107,
+                  108,
+                  101,
+                  95,
+                  100,
+                  105,
+                  115,
+                  116,
+                  114,
+                  105,
+                  98,
+                  117,
+                  116,
+                  111,
+                  114
+                ];
+              },
+              {
+                kind: 'account';
+                path: 'bondingCurve';
+              }
+            ];
+          };
+        },
+        {
+          name: 'claimStatus';
+          docs: ['Status of the claim.'];
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [99, 108, 97, 105, 109, 95, 115, 116, 97, 116, 117, 115];
+              },
+              {
+                kind: 'account';
+                path: 'bondingCurve';
+              },
+              {
+                kind: 'arg';
+                path: 'index';
+              }
+            ];
+          };
+        },
+        {
+          name: 'tokenMint';
+        },
+        {
+          name: 'userAta';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'account';
+                path: 'user';
+              },
+              {
+                kind: 'account';
+                path: 'tokenProgram';
+              },
+              {
+                kind: 'account';
+                path: 'tokenMint';
+              }
+            ];
+            program: {
+              kind: 'const';
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ];
+            };
+          };
+        },
+        {
+          name: 'user';
+          writable: true;
+          signer: true;
+        },
+        {
+          name: 'systemProgram';
+          address: '11111111111111111111111111111111';
+        },
+        {
+          name: 'tokenProgram';
+        },
+        {
+          name: 'associatedTokenProgram';
+          address: 'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL';
+        }
+      ];
+      args: [
+        {
+          name: 'index';
+          type: 'u64';
+        },
+        {
+          name: 'swapAmount';
+          type: 'u64';
+        },
+        {
+          name: 'direction';
+          type: 'u8';
+        },
+        {
+          name: 'minimumReceiveAmount';
+          type: 'u64';
+        },
+        {
+          name: 'maxReceiveAmount';
+          type: 'u64';
+        },
+        {
+          name: 'proof';
+          type: {
+            vec: {
+              array: ['u8', 32];
+            };
+          };
+        }
+      ];
+      returns: 'u64';
+    },
+    {
       name: 'claimToken';
       discriminator: [116, 206, 27, 191, 166, 19, 0, 73];
       accounts: [
@@ -2803,6 +3128,119 @@ export type DefaiLaunchpad = {
       ];
     },
     {
+      name: 'registerWhitelist';
+      discriminator: [188, 210, 164, 38, 220, 170, 155, 148];
+      accounts: [
+        {
+          name: 'admin';
+          writable: true;
+          signer: true;
+        },
+        {
+          name: 'authority';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [97, 117, 116, 104, 111, 114, 105, 116, 121];
+              }
+            ];
+          };
+        },
+        {
+          name: 'pause';
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [112, 97, 117, 115, 101];
+              }
+            ];
+          };
+        },
+        {
+          name: 'bondingCurve';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [98, 111, 110, 100, 105, 110, 103, 95, 99, 117, 114, 118, 101];
+              },
+              {
+                kind: 'account';
+                path: 'tokenMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'distributor';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [
+                  109,
+                  101,
+                  114,
+                  107,
+                  108,
+                  101,
+                  95,
+                  100,
+                  105,
+                  115,
+                  116,
+                  114,
+                  105,
+                  98,
+                  117,
+                  116,
+                  111,
+                  114
+                ];
+              },
+              {
+                kind: 'account';
+                path: 'bondingCurve';
+              }
+            ];
+          };
+        },
+        {
+          name: 'tokenMint';
+          docs: ['The mint to distribute.'];
+        },
+        {
+          name: 'systemProgram';
+          docs: ['The [System] program.'];
+          address: '11111111111111111111111111111111';
+        },
+        {
+          name: 'tokenProgram';
+        }
+      ];
+      args: [
+        {
+          name: 'root';
+          type: {
+            array: ['u8', 32];
+          };
+        },
+        {
+          name: 'maxTotalClaim';
+          type: 'u64';
+        },
+        {
+          name: 'maxNumNodes';
+          type: 'u64';
+        }
+      ];
+    },
+    {
       name: 'simulateSwap';
       discriminator: [91, 71, 52, 125, 156, 83, 182, 136];
       accounts: [
@@ -3828,6 +4266,99 @@ export type DefaiLaunchpad = {
       ];
     },
     {
+      name: 'updateOracle';
+      discriminator: [112, 41, 209, 18, 248, 226, 252, 188];
+      accounts: [
+        {
+          name: 'globalConfig';
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [99, 111, 110, 102, 105, 103];
+              }
+            ];
+          };
+        },
+        {
+          name: 'migrator';
+          writable: true;
+          signer: true;
+        },
+        {
+          name: 'bondingCurve';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [98, 111, 110, 100, 105, 110, 103, 95, 99, 117, 114, 118, 101];
+              },
+              {
+                kind: 'account';
+                path: 'rewardCurrencyMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'oracleVault';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [111, 114, 97, 99, 108, 101, 95, 118, 97, 117, 108, 116];
+              },
+              {
+                kind: 'account';
+                path: 'rewardCurrencyMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'stakingVault';
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: 'const';
+                value: [115, 116, 97, 107, 105, 110, 103, 95, 118, 97, 117, 108, 116, 95, 118, 50];
+              },
+              {
+                kind: 'account';
+                path: 'rewardCurrencyMint';
+              }
+            ];
+          };
+        },
+        {
+          name: 'rewardCurrencyMint';
+        },
+        {
+          name: 'systemProgram';
+          address: '11111111111111111111111111111111';
+        }
+      ];
+      args: [
+        {
+          name: 'updateTradingTime';
+          type: 'bool';
+        },
+        {
+          name: 'oracleDetails';
+          type: {
+            vec: {
+              defined: {
+                name: 'oracleDetail';
+              };
+            };
+          };
+        }
+      ];
+    },
+    {
       name: 'withdraw';
       discriminator: [183, 18, 70, 156, 148, 109, 161, 34];
       accounts: [
@@ -4101,6 +4632,10 @@ export type DefaiLaunchpad = {
       discriminator: [23, 183, 248, 55, 96, 216, 172, 96];
     },
     {
+      name: 'claimStatus';
+      discriminator: [22, 183, 249, 157, 247, 95, 150, 96];
+    },
+    {
       name: 'config';
       discriminator: [155, 12, 170, 224, 30, 250, 204, 130];
     },
@@ -4119,6 +4654,14 @@ export type DefaiLaunchpad = {
     {
       name: 'idoConfig';
       discriminator: [240, 231, 184, 26, 57, 45, 59, 117];
+    },
+    {
+      name: 'merkleDistributor';
+      discriminator: [77, 119, 139, 70, 84, 247, 12, 26];
+    },
+    {
+      name: 'oracleVaults';
+      discriminator: [122, 133, 235, 156, 208, 207, 74, 162];
     },
     {
       name: 'pause';
@@ -4155,6 +4698,10 @@ export type DefaiLaunchpad = {
       discriminator: [95, 114, 97, 156, 212, 46, 152, 8];
     },
     {
+      name: 'eventClaimToken';
+      discriminator: [23, 207, 24, 190, 186, 88, 217, 145];
+    },
+    {
       name: 'eventDcaSubscriptionPolicy';
       discriminator: [188, 138, 100, 213, 31, 74, 239, 21];
     },
@@ -4181,6 +4728,10 @@ export type DefaiLaunchpad = {
     {
       name: 'triggerLaunchEvent';
       discriminator: [149, 6, 64, 217, 221, 50, 68, 145];
+    },
+    {
+      name: 'updateOracleEvent';
+      discriminator: [160, 215, 18, 128, 160, 219, 87, 173];
     },
     {
       name: 'withdrawEvent';
@@ -4350,11 +4901,26 @@ export type DefaiLaunchpad = {
     },
     {
       code: 6032;
+      name: 'oracleAlreadyFinalized';
+      msg: 'Oracle already finalized';
+    },
+    {
+      code: 6033;
+      name: 'oraclePriceInvalid';
+      msg: 'Oracle price invalid';
+    },
+    {
+      code: 6034;
+      name: 'oracleNotFinalized';
+      msg: 'Oracle not finalized';
+    },
+    {
+      code: 6035;
       name: 'dcaAlreadySubscribed';
       msg: 'DCA Already Subscribed';
     },
     {
-      code: 6033;
+      code: 6036;
       name: 'dcaNotReadyForSubscribed';
       msg: 'DCA Not Ready to be subscribed';
     }
@@ -4468,6 +5034,29 @@ export type DefaiLaunchpad = {
           {
             name: 'tokenType';
             type: 'bool';
+          },
+          {
+            name: 'oracleFinalized';
+            type: 'bool';
+          }
+        ];
+      };
+    },
+    {
+      name: 'claimStatus';
+      docs: ['', 'TODO: this is probably better stored as the node that was verified.'];
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'claimant';
+            docs: ['Authority that claimed the tokens.'];
+            type: 'pubkey';
+          },
+          {
+            name: 'amount';
+            docs: ['Amount of tokens claimed.'];
+            type: 'u64';
           }
         ];
       };
@@ -4745,6 +5334,26 @@ export type DefaiLaunchpad = {
       };
     },
     {
+      name: 'eventClaimToken';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'receiver';
+            type: 'pubkey';
+          },
+          {
+            name: 'mint';
+            type: 'pubkey';
+          },
+          {
+            name: 'amount';
+            type: 'u64';
+          }
+        ];
+      };
+    },
+    {
       name: 'eventDcaSubscriptionPolicy';
       type: {
         kind: 'struct';
@@ -5005,6 +5614,51 @@ export type DefaiLaunchpad = {
       };
     },
     {
+      name: 'merkleDistributor';
+      docs: ['State for the account which distributes tokens.'];
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'bump';
+            docs: ['Bump seed.'];
+            type: 'u8';
+          },
+          {
+            name: 'root';
+            docs: ['The 256-bit merkle root.'];
+            type: {
+              array: ['u8', 32];
+            };
+          },
+          {
+            name: 'maxTotalClaim';
+            docs: [
+              'Maximum number of tokens that can ever be claimed from this [MerkleDistributor].'
+            ];
+            type: 'u64';
+          },
+          {
+            name: 'maxNumNodes';
+            docs: [
+              'Maximum number of nodes that can ever be claimed from this [MerkleDistributor].'
+            ];
+            type: 'u64';
+          },
+          {
+            name: 'totalAmountClaimed';
+            docs: ['Total amount of tokens that have been claimed.'];
+            type: 'u64';
+          },
+          {
+            name: 'numNodesClaimed';
+            docs: ['Number of nodes that have been claimed.'];
+            type: 'u64';
+          }
+        ];
+      };
+    },
+    {
       name: 'mode';
       type: {
         kind: 'enum';
@@ -5014,6 +5668,52 @@ export type DefaiLaunchpad = {
           },
           {
             name: 'ido';
+          }
+        ];
+      };
+    },
+    {
+      name: 'oracleDetail';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'token';
+            type: 'pubkey';
+          },
+          {
+            name: 'tokenDecimals';
+            type: 'u8';
+          },
+          {
+            name: 'price';
+            type: 'u64';
+          }
+        ];
+      };
+    },
+    {
+      name: 'oracleVaults';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'rewardCurrencyMint';
+            type: 'pubkey';
+          },
+          {
+            name: 'lastUpdated';
+            type: 'u64';
+          },
+          {
+            name: 'oracleDetails';
+            type: {
+              vec: {
+                defined: {
+                  name: 'oracleDetail';
+                };
+              };
+            };
           }
         ];
       };
@@ -5317,6 +6017,38 @@ export type DefaiLaunchpad = {
           {
             name: 'publicStart';
             type: 'u64';
+          }
+        ];
+      };
+    },
+    {
+      name: 'updateOracleEvent';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'mint';
+            type: 'pubkey';
+          },
+          {
+            name: 'oracleDetails';
+            type: {
+              vec: {
+                defined: {
+                  name: 'oracleDetail';
+                };
+              };
+            };
+          },
+          {
+            name: 'stakingDetails';
+            type: {
+              vec: {
+                defined: {
+                  name: 'stakingVaultV2Info';
+                };
+              };
+            };
           }
         ];
       };

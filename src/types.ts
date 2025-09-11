@@ -49,3 +49,14 @@ export type SimulateSwapParams = {
   amountIn: BN;
   direction: boolean; // true: sell, false: buy
 };
+
+export type UpdateOracleParams = {
+  relayer: PublicKey;
+  poolTokenMint: PublicKey;
+  updateTradingTime: boolean;
+  oracleDetails: {
+    token: PublicKey;
+    tokenDecimals: number;
+    price: BN;
+  }[];
+};

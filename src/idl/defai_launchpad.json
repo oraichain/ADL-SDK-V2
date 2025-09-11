@@ -282,6 +282,255 @@
       "returns": "u64"
     },
     {
+      "name": "claim",
+      "discriminator": [62, 198, 214, 193, 213, 159, 108, 210],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pause",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [112, 97, 117, 115, 101]
+              }
+            ]
+          }
+        },
+        {
+          "name": "team_wallet",
+          "writable": true
+        },
+        {
+          "name": "creator_wallet",
+          "writable": true
+        },
+        {
+          "name": "bonding_curve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [98, 111, 110, 100, 105, 110, 103, 95, 99, 117, 114, 118, 101]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "staking_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 116, 97, 107, 105, 110, 103, 95, 118, 97, 117, 108, 116, 95, 118, 50]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "staker_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 116, 97, 107, 101, 114, 95, 105, 110, 102, 111, 95, 118, 50]
+              },
+              {
+                "kind": "account",
+                "path": "staking_vault"
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "curve_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 117, 114, 118, 101, 95, 118, 97, 117, 108, 116]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "curve_vault_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "curve_vault"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131, 11, 90, 19,
+                153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+              ]
+            }
+          }
+        },
+        {
+          "name": "distributor",
+          "docs": ["The [MerkleDistributor]."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109, 101, 114, 107, 108, 101, 95, 100, 105, 115, 116, 114, 105, 98, 117, 116, 111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              }
+            ]
+          }
+        },
+        {
+          "name": "claim_status",
+          "docs": ["Status of the claim."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 108, 97, 105, 109, 95, 115, 116, 97, 116, 117, 115]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              },
+              {
+                "kind": "arg",
+                "path": "index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint"
+        },
+        {
+          "name": "user_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142, 13, 131, 11, 90, 19,
+                153, 218, 255, 16, 132, 4, 142, 123, 216, 219, 233, 248, 89
+              ]
+            }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        }
+      ],
+      "args": [
+        {
+          "name": "index",
+          "type": "u64"
+        },
+        {
+          "name": "swap_amount",
+          "type": "u64"
+        },
+        {
+          "name": "direction",
+          "type": "u8"
+        },
+        {
+          "name": "minimum_receive_amount",
+          "type": "u64"
+        },
+        {
+          "name": "max_receive_amount",
+          "type": "u64"
+        },
+        {
+          "name": "proof",
+          "type": {
+            "vec": {
+              "array": ["u8", 32]
+            }
+          }
+        }
+      ],
+      "returns": "u64"
+    },
+    {
       "name": "claim_token",
       "discriminator": [116, 206, 27, 191, 166, 19, 0, 73],
       "accounts": [
@@ -2210,6 +2459,103 @@
       ]
     },
     {
+      "name": "register_whitelist",
+      "discriminator": [188, 210, 164, 38, 220, 170, 155, 148],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pause",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [112, 97, 117, 115, 101]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bonding_curve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [98, 111, 110, 100, 105, 110, 103, 95, 99, 117, 114, 118, 101]
+              },
+              {
+                "kind": "account",
+                "path": "token_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "distributor",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109, 101, 114, 107, 108, 101, 95, 100, 105, 115, 116, 114, 105, 98, 117, 116, 111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_mint",
+          "docs": ["The mint to distribute."]
+        },
+        {
+          "name": "system_program",
+          "docs": ["The [System] program."],
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "root",
+          "type": {
+            "array": ["u8", 32]
+          }
+        },
+        {
+          "name": "max_total_claim",
+          "type": "u64"
+        },
+        {
+          "name": "max_num_nodes",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "simulate_swap",
       "discriminator": [91, 71, 52, 125, 156, 83, 182, 136],
       "accounts": [
@@ -3038,6 +3384,99 @@
       ]
     },
     {
+      "name": "update_oracle",
+      "discriminator": [112, 41, 209, 18, 248, 226, 252, 188],
+      "accounts": [
+        {
+          "name": "global_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [99, 111, 110, 102, 105, 103]
+              }
+            ]
+          }
+        },
+        {
+          "name": "migrator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "bonding_curve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [98, 111, 110, 100, 105, 110, 103, 95, 99, 117, 114, 118, 101]
+              },
+              {
+                "kind": "account",
+                "path": "reward_currency_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "oracle_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [111, 114, 97, 99, 108, 101, 95, 118, 97, 117, 108, 116]
+              },
+              {
+                "kind": "account",
+                "path": "reward_currency_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "staking_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 116, 97, 107, 105, 110, 103, 95, 118, 97, 117, 108, 116, 95, 118, 50]
+              },
+              {
+                "kind": "account",
+                "path": "reward_currency_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "reward_currency_mint"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "update_trading_time",
+          "type": "bool"
+        },
+        {
+          "name": "oracle_details",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "OracleDetail"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "withdraw",
       "discriminator": [183, 18, 70, 156, 148, 109, 161, 34],
       "accounts": [
@@ -3221,6 +3660,10 @@
       "discriminator": [23, 183, 248, 55, 96, 216, 172, 96]
     },
     {
+      "name": "ClaimStatus",
+      "discriminator": [22, 183, 249, 157, 247, 95, 150, 96]
+    },
+    {
       "name": "Config",
       "discriminator": [155, 12, 170, 224, 30, 250, 204, 130]
     },
@@ -3239,6 +3682,14 @@
     {
       "name": "IdoConfig",
       "discriminator": [240, 231, 184, 26, 57, 45, 59, 117]
+    },
+    {
+      "name": "MerkleDistributor",
+      "discriminator": [77, 119, 139, 70, 84, 247, 12, 26]
+    },
+    {
+      "name": "OracleVaults",
+      "discriminator": [122, 133, 235, 156, 208, 207, 74, 162]
     },
     {
       "name": "Pause",
@@ -3275,6 +3726,10 @@
       "discriminator": [95, 114, 97, 156, 212, 46, 152, 8]
     },
     {
+      "name": "EventClaimToken",
+      "discriminator": [23, 207, 24, 190, 186, 88, 217, 145]
+    },
+    {
       "name": "EventDCASubscriptionPolicy",
       "discriminator": [188, 138, 100, 213, 31, 74, 239, 21]
     },
@@ -3301,6 +3756,10 @@
     {
       "name": "TriggerLaunchEvent",
       "discriminator": [149, 6, 64, 217, 221, 50, 68, 145]
+    },
+    {
+      "name": "UpdateOracleEvent",
+      "discriminator": [160, 215, 18, 128, 160, 219, 87, 173]
     },
     {
       "name": "WithdrawEvent",
@@ -3470,11 +3929,26 @@
     },
     {
       "code": 6032,
+      "name": "OracleAlreadyFinalized",
+      "msg": "Oracle already finalized"
+    },
+    {
+      "code": 6033,
+      "name": "OraclePriceInvalid",
+      "msg": "Oracle price invalid"
+    },
+    {
+      "code": 6034,
+      "name": "OracleNotFinalized",
+      "msg": "Oracle not finalized"
+    },
+    {
+      "code": 6035,
       "name": "DCAAlreadySubscribed",
       "msg": "DCA Already Subscribed"
     },
     {
-      "code": 6033,
+      "code": 6036,
       "name": "DCANotReadyForSubscribed",
       "msg": "DCA Not Ready to be subscribed"
     }
@@ -3588,6 +4062,29 @@
           {
             "name": "token_type",
             "type": "bool"
+          },
+          {
+            "name": "oracle_finalized",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimStatus",
+      "docs": ["", "TODO: this is probably better stored as the node that was verified."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "claimant",
+            "docs": ["Authority that claimed the tokens."],
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "docs": ["Amount of tokens claimed."],
+            "type": "u64"
           }
         ]
       }
@@ -3865,6 +4362,26 @@
       }
     },
     {
+      "name": "EventClaimToken",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "receiver",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "EventDCASubscriptionPolicy",
       "type": {
         "kind": "struct",
@@ -4125,6 +4642,51 @@
       }
     },
     {
+      "name": "MerkleDistributor",
+      "docs": ["State for the account which distributes tokens."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "docs": ["Bump seed."],
+            "type": "u8"
+          },
+          {
+            "name": "root",
+            "docs": ["The 256-bit merkle root."],
+            "type": {
+              "array": ["u8", 32]
+            }
+          },
+          {
+            "name": "max_total_claim",
+            "docs": [
+              "Maximum number of tokens that can ever be claimed from this [MerkleDistributor]."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "max_num_nodes",
+            "docs": [
+              "Maximum number of nodes that can ever be claimed from this [MerkleDistributor]."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_amount_claimed",
+            "docs": ["Total amount of tokens that have been claimed."],
+            "type": "u64"
+          },
+          {
+            "name": "num_nodes_claimed",
+            "docs": ["Number of nodes that have been claimed."],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "Mode",
       "type": {
         "kind": "enum",
@@ -4134,6 +4696,52 @@
           },
           {
             "name": "Ido"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OracleDetail",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token",
+            "type": "pubkey"
+          },
+          {
+            "name": "token_decimals",
+            "type": "u8"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OracleVaults",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "reward_currency_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "last_updated",
+            "type": "u64"
+          },
+          {
+            "name": "oracle_details",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "OracleDetail"
+                }
+              }
+            }
           }
         ]
       }
@@ -4437,6 +5045,38 @@
           {
             "name": "public_start",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateOracleEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "oracle_details",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "OracleDetail"
+                }
+              }
+            }
+          },
+          {
+            "name": "staking_details",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "StakingVaultV2Info"
+                }
+              }
+            }
           }
         ]
       }
